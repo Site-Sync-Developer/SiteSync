@@ -22,5 +22,11 @@
   },
   "devDependencies": {
     "kill-port": "^2.0.1"
+  },
+  "overrides": {
+    "expo-constants": "18.0.13",
+    "expo-notifications": "0.32.16",
+    "expo-application": "7.0.8",
+    "expo-device": "6.0.8"
   }
 }
