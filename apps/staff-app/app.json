@@ -9,7 +9,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#4a026f"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.staff4dshire.staff",
@@ -32,6 +34,11 @@
       "display": "standalone",
       "themeColor": "#4a026f",
       "backgroundColor": "#4a026f"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "472dc3e4-9b5f-45bd-bfb0-44cce35b0184"
+      }
     }
   }
 }
