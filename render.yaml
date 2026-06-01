@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: sitesync-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    healthCheckPath: /health
+    buildCommand: |
+      npm install --workspaces=false --include=dev
+      npm run db:generate
+      npx prisma@5.22.0 migrate deploy
+      if [ "$SEED_ON_DEPLOY" = "true" ]; then
+        npm run db:seed
+      else
+        echo "Skipping seed (SEED_ON_DEPLOY is not true)"
+      fi
+      npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: EMAIL_FROM
+        value: developer@sitesync.uk
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: PUBLIC_API_BASE_URL
+        value: https://sitesync-backend.onrender.com
+      - key: SEED_ON_DEPLOY
+        value: "false"
+
