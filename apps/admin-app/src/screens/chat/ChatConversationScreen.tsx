@@ -35,8 +35,8 @@ import {
   resolvePublicFileUrl,
   formatChatPresence,
   usersService,
-} from '@staff4dshire/shared';
-import type { Message, User } from '@staff4dshire/shared';
+} from '@sitesync/shared';
+import type { Message, User } from '@sitesync/shared';
 import type { ChatStackParamList } from '../../navigation/ChatStack';
 
 type Route = RouteProp<ChatStackParamList, 'ChatConversation'>;

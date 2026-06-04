@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, Modal, Image, ScrollView } from 'react-native';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { jobCompletionsService } from '@staff4dshire/shared';
-import type { JobCompletion } from '@staff4dshire/shared';
+import { jobCompletionsService } from '@sitesync/shared';
+import type { JobCompletion } from '@sitesync/shared';
 
 function JobItem({
   item,

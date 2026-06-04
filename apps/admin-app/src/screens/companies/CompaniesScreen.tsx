@@ -10,8 +10,8 @@ import {
   Alert,
 } from 'react-native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { companiesService, useAuthContext, useCompanyContext, hasCapability } from '@staff4dshire/shared';
-import type { Company } from '@staff4dshire/shared';
+import { companiesService, useAuthContext, useCompanyContext, hasCapability } from '@sitesync/shared';
+import type { Company } from '@sitesync/shared';
 
 function CompanyItem({ item, active }: { item: Company; active: boolean }) {
   return (

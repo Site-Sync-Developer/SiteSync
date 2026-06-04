@@ -11,14 +11,14 @@ import {
 import * as Location from 'expo-location';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { useAuthContext } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
 import {
   projectsService,
   timesheetsService,
   previewAttendanceAtProject,
   MAX_GPS_ACCURACY_METERS,
-} from '@staff4dshire/shared';
-import type { TimeEntry, Project } from '@staff4dshire/shared';
+} from '@sitesync/shared';
+import type { TimeEntry, Project } from '@sitesync/shared';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { StaffDashboardStackParamList } from '../../navigation/DashboardStack';
 import { getFitDeclaration } from '../../lib/complianceStorage';

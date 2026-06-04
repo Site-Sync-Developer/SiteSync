@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { chatService, useAuthContext, usersService } from '@staff4dshire/shared';
+import { chatService, useAuthContext, usersService } from '@sitesync/shared';
 
 export function ToolboxTalkScreen() {
   const queryClient = useQueryClient();

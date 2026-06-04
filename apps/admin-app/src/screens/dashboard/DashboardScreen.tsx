@@ -11,14 +11,14 @@ import {
   hasCapability,
   getStoredActiveProjectId,
   setStoredActiveProjectId,
-} from '@staff4dshire/shared';
-import type { Capability } from '@staff4dshire/shared';
+} from '@sitesync/shared';
+import type { Capability } from '@sitesync/shared';
 import {
   usersService,
   projectsService,
   timesheetsService,
   jobCompletionsService,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 import type { DashboardStackParamList } from '../../navigation/DashboardStack';
 
 type Nav = NativeStackNavigationProp<DashboardStackParamList, 'DashboardHome'>;

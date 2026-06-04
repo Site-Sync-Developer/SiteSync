@@ -4,7 +4,7 @@ import {
   getRequiresSupervisorProjectPick,
   getStoredActiveProjectId,
   useAuthContext,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 import { MainTabs } from './MainTabs';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { InvitationRegisterScreen } from '../screens/auth/InvitationRegisterScreen';

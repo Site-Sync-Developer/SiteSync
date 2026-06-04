@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Ionicons } from '@expo/vector-icons';
-import { xeroService, type XeroCreateInvoiceLine } from '@staff4dshire/shared';
+import { xeroService, type XeroCreateInvoiceLine } from '@sitesync/shared';
 
 function apiErrorMessage(err: unknown): string {
   const ax = err as { response?: { data?: { error?: string; message?: string } }; message?: string };

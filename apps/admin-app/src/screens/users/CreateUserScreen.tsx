@@ -14,8 +14,8 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Clipboard from 'expo-clipboard';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
-import { companyInvitationsService, uploadsService, usersService, useAuthContext, useCompanyContext } from '@staff4dshire/shared';
-import type { UserRole } from '@staff4dshire/shared';
+import { companyInvitationsService, uploadsService, usersService, useAuthContext, useCompanyContext } from '@sitesync/shared';
+import type { UserRole } from '@sitesync/shared';
 
 const ROLES: UserRole[] = ['staff', 'supervisor', 'admin'];
 

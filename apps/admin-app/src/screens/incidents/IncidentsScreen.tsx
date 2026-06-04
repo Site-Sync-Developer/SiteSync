@@ -11,8 +11,8 @@ import {
   Alert,
 } from 'react-native';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { incidentsService, uploadsService, useAuthContext } from '@staff4dshire/shared';
-import type { Incident } from '@staff4dshire/shared';
+import { incidentsService, uploadsService, useAuthContext } from '@sitesync/shared';
+import type { Incident } from '@sitesync/shared';
 import * as ImagePicker from 'expo-image-picker';
 
 const SEVERITIES = ['low', 'medium', 'high', 'critical'] as const;

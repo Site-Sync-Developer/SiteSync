@@ -3,8 +3,8 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { notificationsService } from '@staff4dshire/shared';
-import type { Notification } from '@staff4dshire/shared';
+import { notificationsService } from '@sitesync/shared';
+import type { Notification } from '@sitesync/shared';
 
 function NotificationItem({
   item,

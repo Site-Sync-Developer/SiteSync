@@ -12,9 +12,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
-import { useAuthContext } from '@staff4dshire/shared';
-import { usersService, chatService } from '@staff4dshire/shared';
-import type { User } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
+import { usersService, chatService } from '@sitesync/shared';
+import type { User } from '@sitesync/shared';
 import type { ChatStackParamList } from '../../navigation/ChatStack';
 
 type Nav = NativeStackNavigationProp<ChatStackParamList, 'NewConversation'>;

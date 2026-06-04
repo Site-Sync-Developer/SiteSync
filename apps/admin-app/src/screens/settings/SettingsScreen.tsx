@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useAuthContext } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
 
 export function SettingsScreen() {
   const { user, logout } = useAuthContext();

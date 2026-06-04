@@ -24,7 +24,7 @@ import {
   companiesService,
   jobCompletionsService,
   incidentsService,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 import type {
   TimeEntry,
   User,
@@ -33,7 +33,7 @@ import type {
   JobCompletion,
   Incident,
   UserRole,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);

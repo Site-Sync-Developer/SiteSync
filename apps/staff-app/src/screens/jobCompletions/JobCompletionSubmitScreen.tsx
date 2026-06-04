@@ -14,7 +14,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
-import { useAuthContext, jobCompletionsService, uploadsService } from '@staff4dshire/shared';
+import { useAuthContext, jobCompletionsService, uploadsService } from '@sitesync/shared';
 import * as ImagePicker from 'expo-image-picker';
 import type { StaffDashboardStackParamList } from '../../navigation/DashboardStack';
 

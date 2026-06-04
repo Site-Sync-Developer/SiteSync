@@ -17,9 +17,9 @@ import { BlurView } from 'expo-blur';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useAuthContext } from '@staff4dshire/shared';
-import { chatService, usersService, chatLastMessagePreview } from '@staff4dshire/shared';
-import type { Conversation, User } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
+import { chatService, usersService, chatLastMessagePreview } from '@sitesync/shared';
+import type { Conversation, User } from '@sitesync/shared';
 import type { ChatStackParamList } from '../../navigation/ChatStack';
 
 type Nav = NativeStackNavigationProp<ChatStackParamList, 'ChatList'>;

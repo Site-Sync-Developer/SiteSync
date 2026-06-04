@@ -14,17 +14,18 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.staff4dshire.staff",
+      "bundleIdentifier": "com.sitesync.staff",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Select photos to send in chat.",
-        "NSCameraUsageDescription": "Take photos to send in chat."
+        "NSCameraUsageDescription": "Take photos to send in chat.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#4a026f"
       },
-      "package": "com.staff4dshire.staff"
+      "package": "com.sitesync.staff"
     },
     "web": {
       "bundler": "metro",

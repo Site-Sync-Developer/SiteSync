@@ -18,8 +18,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { uploadsService, usersService, useAuthContext, useCompanyContext } from '@staff4dshire/shared';
-import type { User } from '@staff4dshire/shared';
+import { uploadsService, usersService, useAuthContext, useCompanyContext } from '@sitesync/shared';
+import type { User } from '@sitesync/shared';
 import type { UsersStackParamList } from '../../navigation/UsersStack';
 
 type Nav = NativeStackNavigationProp<UsersStackParamList, 'UsersList'>;

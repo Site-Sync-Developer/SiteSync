@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const TOKEN_KEY = '@staff4dshire/token';
-const USER_KEY = '@staff4dshire/user';
-const ACTIVE_COMPANY_KEY = '@staff4dshire/active_company_id';
-const ACTIVE_PROJECT_KEY = '@staff4dshire/active_project_id';
-const REQUIRE_SUPERVISOR_PROJECT_PICK_KEY = '@staff4dshire/require_supervisor_project_pick';
+const TOKEN_KEY = '@sitesync/token';
+const USER_KEY = '@sitesync/user';
+const ACTIVE_COMPANY_KEY = '@sitesync/active_company_id';
+const ACTIVE_PROJECT_KEY = '@sitesync/active_project_id';
+const REQUIRE_SUPERVISOR_PROJECT_PICK_KEY = '@sitesync/require_supervisor_project_pick';
 
 export async function getStoredToken(): Promise<string | null> {
   return AsyncStorage.getItem(TOKEN_KEY);

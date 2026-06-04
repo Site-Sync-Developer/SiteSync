@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { useAuthContext } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
 
 export function ChangePasswordScreen() {
   const [current, setCurrent] = useState('');

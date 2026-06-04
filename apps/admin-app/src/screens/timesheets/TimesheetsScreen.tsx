@@ -22,8 +22,8 @@ import * as Sharing from 'expo-sharing';
 import * as Print from 'expo-print';
 import { useQuery } from '@tanstack/react-query';
 import { Ionicons } from '@expo/vector-icons';
-import { timesheetsService, usersService, projectsService } from '@staff4dshire/shared';
-import type { TimeEntry, User, Project } from '@staff4dshire/shared';
+import { timesheetsService, usersService, projectsService } from '@sitesync/shared';
+import type { TimeEntry, User, Project } from '@sitesync/shared';
 
 type Period = 'all' | 'week' | 'month';
 type StatusFilter = 'all' | 'open' | 'completed';

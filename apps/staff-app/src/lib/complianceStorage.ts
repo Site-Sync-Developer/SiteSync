@@ -13,8 +13,8 @@ export type RamsDeclarationState = {
   savedAt: string;
 };
 
-const fitKey = (userId: string) => `@staff4dshire/fit_declaration/${userId}`;
-const ramsKey = (userId: string) => `@staff4dshire/rams_declaration/${userId}`;
+const fitKey = (userId: string) => `@sitesync/fit_declaration/${userId}`;
+const ramsKey = (userId: string) => `@sitesync/rams_declaration/${userId}`;
 
 export async function getFitDeclaration(userId: string): Promise<FitDeclarationState | null> {
   const raw = await AsyncStorage.getItem(fitKey(userId));

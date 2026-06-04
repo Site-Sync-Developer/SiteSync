@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, Platform, Pressable, ActivityIndicator, TextInput } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
-import { useAuthContext } from '@staff4dshire/shared';
-import { timesheetsService, usersService, projectsService } from '@staff4dshire/shared';
-import type { TimeEntry, User, Project } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
+import { timesheetsService, usersService, projectsService } from '@sitesync/shared';
+import type { TimeEntry, User, Project } from '@sitesync/shared';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as Print from 'expo-print';

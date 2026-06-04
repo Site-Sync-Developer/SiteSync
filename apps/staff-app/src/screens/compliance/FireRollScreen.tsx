@@ -7,7 +7,7 @@ import {
   usersService,
   timesheetsService,
   getStoredActiveProjectId,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 
 export function FireRollScreen() {
   const { user } = useAuthContext();

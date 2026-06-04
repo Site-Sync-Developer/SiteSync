@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { companyInvitationsService, uploadsService, usersService, useAuthContext } from '@staff4dshire/shared';
+import { companyInvitationsService, uploadsService, usersService, useAuthContext } from '@sitesync/shared';
 import type { StaffAuthStackParamList } from '../../navigation/authTypes';
 
 type Props = NativeStackScreenProps<StaffAuthStackParamList, 'InvitationRegister'>;

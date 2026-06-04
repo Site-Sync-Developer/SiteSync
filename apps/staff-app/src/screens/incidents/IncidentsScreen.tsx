@@ -11,9 +11,9 @@ import {
   FlatList,
 } from 'react-native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useAuthContext } from '@staff4dshire/shared';
-import { incidentsService, uploadsService } from '@staff4dshire/shared';
-import type { Incident } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
+import { incidentsService, uploadsService } from '@sitesync/shared';
+import type { Incident } from '@sitesync/shared';
 import * as ImagePicker from 'expo-image-picker';
 
 const SEVERITIES = ['low', 'medium', 'high', 'critical'] as const;

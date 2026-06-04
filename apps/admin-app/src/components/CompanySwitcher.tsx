@@ -9,8 +9,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useCompanyContext } from '@staff4dshire/shared';
-import type { Company } from '@staff4dshire/shared';
+import { useCompanyContext } from '@sitesync/shared';
+import type { Company } from '@sitesync/shared';
 
 export function CompanySwitcher() {
   const { companies, activeCompany, setActiveCompanyId, loading } = useCompanyContext();

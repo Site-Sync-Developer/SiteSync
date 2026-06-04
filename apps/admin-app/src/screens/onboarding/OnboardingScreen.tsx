@@ -11,8 +11,8 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { onboardingService, useAuthContext } from '@staff4dshire/shared';
-import type { OnboardingRecord } from '@staff4dshire/shared';
+import { onboardingService, useAuthContext } from '@sitesync/shared';
+import type { OnboardingRecord } from '@sitesync/shared';
 
 function RecordItem({
   item,

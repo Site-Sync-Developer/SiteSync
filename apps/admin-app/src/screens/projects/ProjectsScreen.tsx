@@ -3,8 +3,8 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert, Platform, Te
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { projectsService } from '@staff4dshire/shared';
-import type { Project } from '@staff4dshire/shared';
+import { projectsService } from '@sitesync/shared';
+import type { Project } from '@sitesync/shared';
 import { Ionicons } from '@expo/vector-icons';
 import type { ProjectsStackParamList } from '../../navigation/ProjectsStack';
 

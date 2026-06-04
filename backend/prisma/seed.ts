@@ -12,7 +12,7 @@ async function main() {
   const passwordHash = await bcrypt.hash('123456', 10);
   const superadmin = await prisma.user.create({
     data: {
-      email: 'tom@staff4dshireproperties.com',
+      email: 'tom@sitesyncproperties.com',
       passwordHash,
       firstName: 'Tom',
       lastName: 'Staff4dshire',
@@ -33,7 +33,7 @@ async function main() {
   const adminInvitation = await prisma.companyInvitation.create({
     data: {
       token: invitationToken,
-      email: 'adam@staff4dshireproperties.com',
+      email: 'adam@sitesyncproperties.com',
       role: 'admin',
       companyId: company.id,
       expiresAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),

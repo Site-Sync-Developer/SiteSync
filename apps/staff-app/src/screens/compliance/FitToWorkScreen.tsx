@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Switch, Alert, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useAuthContext } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
 import { setFitDeclaration } from '../../lib/complianceStorage';
 
 export function FitToWorkScreen() {

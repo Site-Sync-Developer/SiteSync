@@ -21,7 +21,7 @@ import {
   xeroService,
   type XeroStatusResponse,
   type XeroInvoiceListItem,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 import { CreateInvoiceModal } from './CreateInvoiceModal';
 
 function apiErrorMessage(err: unknown): string {

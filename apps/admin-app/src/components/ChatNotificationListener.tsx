@@ -5,8 +5,8 @@ import {
   getActiveChatConversationId,
   getSocket,
   useAuthContext,
-} from '@staff4dshire/shared';
-import type { Message } from '@staff4dshire/shared';
+} from '@sitesync/shared';
+import type { Message } from '@sitesync/shared';
 
 let notificationHandlerConfigured = false;
 

@@ -34,7 +34,7 @@ export function createApp() {
   app.use('/files', express.static(uploadsRoot));
 
   app.get('/health', (_req, res) => {
-    res.json({ ok: true, service: 'staff4dshire-api' });
+    res.json({ ok: true, service: 'sitesync-api' });
   });
 
   // Match mobile client paths (baseURL is /api, not /api/auth)

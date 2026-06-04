@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, Pressable, Alert, ActivityIndicator, Modal, ScrollView } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
-import { useAuthContext, getStoredActiveProjectId } from '@staff4dshire/shared';
-import { timesheetsService, usersService, projectsService } from '@staff4dshire/shared';
-import type { TimeEntry, User, Project } from '@staff4dshire/shared';
+import { useAuthContext, getStoredActiveProjectId } from '@sitesync/shared';
+import { timesheetsService, usersService, projectsService } from '@sitesync/shared';
+import type { TimeEntry, User, Project } from '@sitesync/shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type EntryItemProps = {

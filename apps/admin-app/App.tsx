@@ -14,7 +14,7 @@ import {
   useAuthContext,
   SocketProvider,
   RegisterExpoPush,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { ChatNotificationListener } from './src/components/ChatNotificationListener';
 

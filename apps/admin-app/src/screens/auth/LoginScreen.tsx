@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { useAuthContext } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
 import type { AdminAuthStackParamList } from '../../navigation/authTypes';
 
 type Nav = NativeStackNavigationProp<AdminAuthStackParamList>;

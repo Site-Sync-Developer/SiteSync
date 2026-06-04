@@ -20,7 +20,7 @@ import {
   uploadsService,
   usersService,
   useAuthContext,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 import type { StaffAuthStackParamList } from '../../navigation/authTypes';
 
 type Nav = NativeStackNavigationProp<StaffAuthStackParamList>;

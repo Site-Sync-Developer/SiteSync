@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { trashService, type TrashProject, type TrashUser } from '@staff4dshire/shared';
+import { trashService, type TrashProject, type TrashUser } from '@sitesync/shared';
 
 type Tab = 'projects' | 'users';
 

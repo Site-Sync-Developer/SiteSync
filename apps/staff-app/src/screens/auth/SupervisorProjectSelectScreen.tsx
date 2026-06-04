@@ -6,8 +6,8 @@ import {
   setStoredActiveProjectId,
   setRequiresSupervisorProjectPick,
   useAuthContext,
-} from '@staff4dshire/shared';
-import type { Project } from '@staff4dshire/shared';
+} from '@sitesync/shared';
+import type { Project } from '@sitesync/shared';
 
 export function SupervisorProjectSelectScreen() {
   const { user } = useAuthContext();

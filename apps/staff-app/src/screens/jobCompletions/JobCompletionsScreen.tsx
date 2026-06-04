@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView, Modal, Image } from 'react-native';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAuthContext } from '@staff4dshire/shared';
-import { projectsService, jobCompletionsService } from '@staff4dshire/shared';
-import type { JobCompletion } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
+import { projectsService, jobCompletionsService } from '@sitesync/shared';
+import type { JobCompletion } from '@sitesync/shared';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';

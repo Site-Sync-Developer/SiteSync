@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
-import { governanceService } from '@staff4dshire/shared';
+import { governanceService } from '@sitesync/shared';
 
 function Metric({ label, value }: { label: string; value: number }) {
   return (

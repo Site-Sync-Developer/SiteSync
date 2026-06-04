@@ -15,8 +15,8 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
   onboardingService,
   useAuthContext,
-} from '@staff4dshire/shared';
-import type { OnboardingJson } from '@staff4dshire/shared';
+} from '@sitesync/shared';
+import type { OnboardingJson } from '@sitesync/shared';
 
 type OnboardingFormParams = { userId?: string; readOnly?: boolean } | undefined;
 

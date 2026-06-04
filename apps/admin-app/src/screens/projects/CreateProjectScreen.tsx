@@ -24,8 +24,8 @@ import {
   uploadsService,
   useAuthContext,
   usersService,
-} from '@staff4dshire/shared';
-import type { ProjectType, User } from '@staff4dshire/shared';
+} from '@sitesync/shared';
+import type { ProjectType, User } from '@sitesync/shared';
 import type { RouteProp } from '@react-navigation/native';
 import type { ProjectsStackParamList } from '../../navigation/ProjectsStack';
 import {

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
-import { useAuthContext } from '@staff4dshire/shared';
+import { useAuthContext } from '@sitesync/shared';
 import type { StaffDashboardStackParamList } from '../../navigation/DashboardStack';
 
 type Nav = NativeStackNavigationProp<StaffDashboardStackParamList, 'ComplianceHub'>;

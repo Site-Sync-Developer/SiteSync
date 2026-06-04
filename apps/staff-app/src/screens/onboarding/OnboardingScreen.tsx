@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
-import { onboardingService, useAuthContext } from '@staff4dshire/shared';
-import type { OnboardingRecord } from '@staff4dshire/shared';
+import { onboardingService, useAuthContext } from '@sitesync/shared';
+import type { OnboardingRecord } from '@sitesync/shared';
 
 function RecordItem({ item }: { item: OnboardingRecord }) {
   return (

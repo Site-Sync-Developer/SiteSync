@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import { chatService, useAuthContext } from '@staff4dshire/shared';
+import { chatService, useAuthContext } from '@sitesync/shared';
 import { DashboardStack } from './DashboardStack';
 import { ChatStack } from './ChatStack';
 import { SettingsStack } from './SettingsStack';

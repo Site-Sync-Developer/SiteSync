@@ -20,7 +20,7 @@ import {
   type XeroStatusResponse,
   type Company,
   type XeroTenantOption,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 
 const XERO_REDIRECT_URI = process.env.EXPO_PUBLIC_XERO_REDIRECT_URI?.trim() ?? '';
 

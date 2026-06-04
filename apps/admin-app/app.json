@@ -14,7 +14,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.staff4dshire.admin",
+      "bundleIdentifier": "com.sitesync.admin",
       "config": {
         "googleMapsApiKey": "AIzaSyAku6yvj27zW_4phLFucyY4TZhXBNBHQSM"
       },
@@ -27,7 +27,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#4a026f"
       },
-      "package": "com.staff4dshire.admin",
+      "package": "com.sitesync.admin",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAku6yvj27zW_4phLFucyY4TZhXBNBHQSM"

@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { Ionicons } from '@expo/vector-icons';
-import { notificationsService } from '@staff4dshire/shared';
+import { notificationsService } from '@sitesync/shared';
 import { openNotifications } from '../navigation/openNotifications';
 
 export function NotificationBell() {

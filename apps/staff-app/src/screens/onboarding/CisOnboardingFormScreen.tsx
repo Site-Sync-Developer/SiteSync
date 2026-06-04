@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { onboardingService, useAuthContext } from '@staff4dshire/shared';
-import type { OnboardingJson } from '@staff4dshire/shared';
+import { onboardingService, useAuthContext } from '@sitesync/shared';
+import type { OnboardingJson } from '@sitesync/shared';
 
 type CisParams = { userId?: string; readOnly?: boolean } | undefined;
 type Nav = NativeStackNavigationProp<Record<string, object | undefined>, 'CisOnboarding'>;

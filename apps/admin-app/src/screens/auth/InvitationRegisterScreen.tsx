@@ -19,7 +19,7 @@ import {
   uploadsService,
   usersService,
   useAuthContext,
-} from '@staff4dshire/shared';
+} from '@sitesync/shared';
 import type { AdminAuthStackParamList } from '../../navigation/authTypes';
 
 type Props = NativeStackScreenProps<AdminAuthStackParamList, 'InvitationRegister'>;

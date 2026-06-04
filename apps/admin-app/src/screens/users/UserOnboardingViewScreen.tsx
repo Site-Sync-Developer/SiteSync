@@ -12,8 +12,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { usersService, onboardingService, useAuthContext } from '@staff4dshire/shared';
-import type { OnboardingJson } from '@staff4dshire/shared';
+import { usersService, onboardingService, useAuthContext } from '@sitesync/shared';
+import type { OnboardingJson } from '@sitesync/shared';
 import type { UsersStackParamList } from '../../navigation/UsersStack';
 
 type Nav = NativeStackNavigationProp<UsersStackParamList>;

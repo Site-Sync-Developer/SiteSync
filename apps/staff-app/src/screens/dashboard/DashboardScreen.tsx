@@ -11,9 +11,9 @@ import {
   setStoredActiveProjectId,
   projectsService,
   jobCompletionsService,
-} from '@staff4dshire/shared';
-import { timesheetsService } from '@staff4dshire/shared';
-import type { TimeEntry } from '@staff4dshire/shared';
+} from '@sitesync/shared';
+import { timesheetsService } from '@sitesync/shared';
+import type { TimeEntry } from '@sitesync/shared';
 import type { StaffDashboardStackParamList } from '../../navigation/DashboardStack';
 
 type Nav = NativeStackNavigationProp<StaffDashboardStackParamList, 'DashboardHome'>;
