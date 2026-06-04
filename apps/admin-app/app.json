@@ -20,7 +20,8 @@
       },
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Select photos to send in chat.",
-        "NSCameraUsageDescription": "Take photos to send in chat."
+        "NSCameraUsageDescription": "Take photos to send in chat.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
