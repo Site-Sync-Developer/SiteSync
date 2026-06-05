@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   getRequiresSupervisorProjectPick,
@@ -70,7 +71,11 @@ export function RootNavigator() {
   }, [isAuthenticated, user?.role]);
 
   if (loading || projectCheckLoading) {
-    return null;
+    return (
+      <View style={{ flex: 1, backgroundColor: '#4a026f' }}>
+        <ActivityIndicator style={{ flex: 1 }} size="large" color="#fff" />
+      </View>
+    );
   }
 
   if (isAuthenticated && mustChangePassword) {
