@@ -4,8 +4,10 @@
     "slug": "sitesync-staff",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#4a026f"
     },
@@ -23,6 +25,7 @@
     },
     "android": {
       "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#4a026f"
       },
       "package": "com.sitesync.staff"
@@ -33,6 +36,7 @@
       "name": "SiteSync Staff",
       "shortName": "SiteSync Staff",
       "display": "standalone",
+      "favicon": "./assets/icon.png",
       "themeColor": "#4a026f",
       "backgroundColor": "#4a026f"
     },

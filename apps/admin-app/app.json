@@ -4,8 +4,10 @@
     "slug": "sitesync-admin",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#4a026f"
     },
@@ -26,6 +28,7 @@
     },
     "android": {
       "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#4a026f"
       },
       "package": "com.sitesync.admin",
@@ -41,6 +44,7 @@
       "name": "SiteSync Admin",
       "shortName": "SiteSync Admin",
       "display": "standalone",
+      "favicon": "./assets/icon.png",
       "themeColor": "#4a026f",
       "backgroundColor": "#4a026f"
     },
