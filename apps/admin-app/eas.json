@@ -6,13 +6,25 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "http://localhost:3001/api",
+        "EXPO_PUBLIC_SOCKET_URL": "http://localhost:3001"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://api.sitesync.uk/api",
+        "EXPO_PUBLIC_SOCKET_URL": "https://api.sitesync.uk"
+      }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://api.sitesync.uk/api",
+        "EXPO_PUBLIC_SOCKET_URL": "https://api.sitesync.uk"
+      }
     }
   },
   "submit": {
