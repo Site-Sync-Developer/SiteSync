@@ -10,22 +10,29 @@ export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const loadStoredUser = useCallback(async () => {
-    const token = await getStoredToken();
-    const userJson = await getStoredUser();
-    if (token && userJson) {
-      try {
-        const parsed = JSON.parse(userJson) as User;
-        setUser(parsed);
-        setIsAuthenticated(true);
-      } catch {
+    try {
+      const token = await getStoredToken();
+      const userJson = await getStoredUser();
+      if (token && userJson) {
+        try {
+          const parsed = JSON.parse(userJson) as User;
+          setUser(parsed);
+          setIsAuthenticated(true);
+        } catch {
+          setUser(null);
+          setIsAuthenticated(false);
+        }
+      } else {
         setUser(null);
         setIsAuthenticated(false);
       }
-    } else {
+    } catch {
+      // AsyncStorage unavailable — treat as unauthenticated
       setUser(null);
       setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   useEffect(() => {

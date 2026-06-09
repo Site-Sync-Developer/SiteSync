@@ -36,6 +36,12 @@ function AppContent() {
     }
   }, [loading]);
 
+  // Safety net: hide splash after 5 s regardless, so the app never stays stuck
+  useEffect(() => {
+    const t = setTimeout(() => SplashScreen.hideAsync().catch(() => undefined), 5000);
+    return () => clearTimeout(t);
+  }, []);
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#4a026f' }}>
