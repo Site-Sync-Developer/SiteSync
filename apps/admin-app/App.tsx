@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'react-native-gesture-handler';
 import { View, ActivityIndicator } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -47,12 +46,6 @@ function AppContent() {
 }
 
 export default function App() {
-  // Hide the splash screen as soon as the root component mounts.
-  // The GestureHandlerRootView purple background prevents any white flash.
-  useEffect(() => {
-    SplashScreen.hideAsync().catch(() => undefined);
-  }, []);
-
   return (
     <ErrorBoundary>
       <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#4a026f' }}>
