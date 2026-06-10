@@ -10,9 +10,14 @@ export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const loadStoredUser = useCallback(async () => {
+    // Race against a 5-second timeout so a hanging AsyncStorage call never
+    // leaves the app stuck on the loading screen.
+    const timeout = <T,>(p: Promise<T>): Promise<T | null> =>
+      Promise.race([p, new Promise<null>((res) => setTimeout(() => res(null), 5000))]);
+
     try {
-      const token = await getStoredToken();
-      const userJson = await getStoredUser();
+      const token = await timeout(getStoredToken());
+      const userJson = token ? await timeout(getStoredUser()) : null;
       if (token && userJson) {
         try {
           const parsed = JSON.parse(userJson) as User;
