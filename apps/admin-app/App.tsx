@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 import 'react-native-gesture-handler';
 import { View, ActivityIndicator } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
@@ -51,10 +51,10 @@ function AppContent() {
 }
 
 export default function App() {
-  // Hide the splash as soon as the root view has rendered on screen.
-  // Using onLayout rather than a useEffect tied to auth state, so it fires
-  // even if AsyncStorage hangs and loading never resolves.
-  const onRootLayout = useCallback(() => {
+  // useEffect fires after the first commit whether or not ErrorBoundary
+  // catches a render error — unlike onLayout on a child, which won't fire
+  // if ErrorBoundary replaces that child with its fallback UI.
+  useEffect(() => {
     SplashScreen.hideAsync().catch(() => undefined);
   }, []);
 
@@ -62,7 +62,6 @@ export default function App() {
     <ErrorBoundary>
       <GestureHandlerRootView
         style={{ flex: 1, backgroundColor: '#4a026f' }}
-        onLayout={onRootLayout}
       >
         <SafeAreaProvider>
           <QueryClientProvider client={queryClient}>
