@@ -48,6 +48,17 @@
       "themeColor": "#4a026f",
       "backgroundColor": "#4a026f"
     },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#4a026f",
+          "image": "./assets/splash.png",
+          "resizeMode": "contain"
+        }
+      ],
+      "expo-notifications"
+    ],
     "extra": {
       "eas": {
         "projectId": "a5443789-24f8-4f03-916a-c3b83b11af68"

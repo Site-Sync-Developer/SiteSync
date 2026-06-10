@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Alert } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 
 interface State {
   hasError: boolean;
@@ -11,6 +12,13 @@ export class ErrorBoundary extends React.Component<{ children: React.ReactNode }
 
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error: String(error) };
+  }
+
+  componentDidCatch(error: Error) {
+    // Hide the splash (in case it's still showing) then surface the error
+    // as a native alert that appears above everything.
+    SplashScreen.hideAsync().catch(() => undefined);
+    Alert.alert('App error', String(error));
   }
 
   render() {

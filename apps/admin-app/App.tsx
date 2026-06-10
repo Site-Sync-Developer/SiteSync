@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import 'react-native-gesture-handler';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Alert } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -51,28 +51,40 @@ function AppContent() {
 }
 
 export default function App() {
-  // useEffect fires after the first commit whether or not ErrorBoundary
-  // catches a render error — unlike onLayout on a child, which won't fire
-  // if ErrorBoundary replaces that child with its fallback UI.
   useEffect(() => {
+    // Attempt to hide the splash and surface any error as a native alert
+    // so it's visible even if the splash is covering the screen.
+    SplashScreen.hideAsync().catch((e: unknown) => {
+      Alert.alert(
+        'Splash error',
+        e instanceof Error ? e.message : String(e),
+      );
+    });
+  }, []);
+
+  // onLayout on the outermost View: fires after the native layout pass,
+  // which is later than useEffect and acts as a reliable fallback.
+  // This View sits ABOVE ErrorBoundary so it always renders regardless
+  // of any child error.
+  const onRootLayout = useCallback(() => {
     SplashScreen.hideAsync().catch(() => undefined);
   }, []);
 
   return (
-    <ErrorBoundary>
-      <GestureHandlerRootView
-        style={{ flex: 1, backgroundColor: '#4a026f' }}
-      >
-        <SafeAreaProvider>
-          <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-              <CompanyProvider>
-                <AppContent />
-              </CompanyProvider>
-            </AuthProvider>
-          </QueryClientProvider>
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
-    </ErrorBoundary>
+    <View style={StyleSheet.absoluteFill} onLayout={onRootLayout}>
+      <ErrorBoundary>
+        <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#4a026f' }}>
+          <SafeAreaProvider>
+            <QueryClientProvider client={queryClient}>
+              <AuthProvider>
+                <CompanyProvider>
+                  <AppContent />
+                </CompanyProvider>
+              </AuthProvider>
+            </QueryClientProvider>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </ErrorBoundary>
+    </View>
   );
 }
