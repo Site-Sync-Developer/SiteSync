@@ -12,26 +12,10 @@ import { RootNavigator } from './src/navigation/RootNavigator';
 import { ChatNotificationListener } from './src/components/ChatNotificationListener';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 
-// Keep splash screen visible until React is ready — prevents the white-screen gap
-// between the native iOS launch screen and the first React render.
-SplashScreen.preventAutoHideAsync().catch(() => undefined);
-
 const queryClient = new QueryClient();
 
 function AppContent() {
   const { loading } = useAuthContext();
-
-  useEffect(() => {
-    if (!loading) {
-      SplashScreen.hideAsync().catch(() => undefined);
-    }
-  }, [loading]);
-
-  // Safety net: hide splash after 5 s regardless, so the app never stays stuck
-  useEffect(() => {
-    const t = setTimeout(() => SplashScreen.hideAsync().catch(() => undefined), 5000);
-    return () => clearTimeout(t);
-  }, []);
 
   if (loading) {
     return (
@@ -54,6 +38,12 @@ function AppContent() {
 }
 
 export default function App() {
+  // Hide the splash screen as soon as the root component mounts.
+  // The GestureHandlerRootView purple background prevents any white flash.
+  useEffect(() => {
+    SplashScreen.hideAsync().catch(() => undefined);
+  }, []);
+
   return (
     <ErrorBoundary>
       <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#4a026f' }}>
