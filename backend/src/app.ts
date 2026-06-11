@@ -1,5 +1,6 @@
 import path from 'path';
 import express from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { corsOrigin } from './corsConfig';
 import authRoutes from './routes/auth';
@@ -62,6 +63,12 @@ export function createApp() {
   app.use('/api/governance', governanceRoutes);
   app.use('/api/places', placesRoutes);
   app.use('/api/trash', trashRoutes);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    console.error('Unhandled route error:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  });
 
   return app;
 }

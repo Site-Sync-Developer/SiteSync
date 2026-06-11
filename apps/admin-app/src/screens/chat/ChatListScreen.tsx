@@ -13,7 +13,6 @@ import {
   Alert,
   ActionSheetIOS,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -122,21 +121,17 @@ function ListAvatar({ user, group }: { user: User | null; group: boolean }) {
   );
 }
 
-function GlassChatCard({
+function ChatCard({
   pressed,
   children,
 }: {
   pressed: boolean;
   children: React.ReactNode;
 }) {
-  const common = [styles.glassInner, pressed && styles.glassPressed];
-  if (Platform.OS === 'web') {
-    return <View style={[styles.glassWeb, ...common]}>{children}</View>;
-  }
   return (
-    <BlurView intensity={52} tint="light" style={[styles.glassBlur, ...common]}>
+    <View style={[styles.card, pressed && styles.cardPressed]}>
       {children}
-    </BlurView>
+    </View>
   );
 }
 
@@ -166,7 +161,7 @@ function ConversationItem({
   return (
     <Pressable onPress={onPress} onLongPress={onLongPress} style={styles.itemWrap}>
       {({ pressed }) => (
-        <GlassChatCard pressed={pressed}>
+        <ChatCard pressed={pressed}>
           <View style={styles.row}>
             <ListAvatar user={avatarUser} group={isGroup} />
             <View style={styles.mid}>
@@ -186,7 +181,7 @@ function ConversationItem({
               ) : null}
             </View>
           </View>
-        </GlassChatCard>
+        </ChatCard>
       )}
     </Pressable>
   );
@@ -410,24 +405,14 @@ const styles = StyleSheet.create({
       web: { boxShadow: '0 4px 24px rgba(45, 27, 61, 0.12)' } as object,
     }),
   },
-  glassBlur: {
+  card: {
     borderRadius: 16,
-    borderWidth: StyleSheet.hairlineWidth * 2,
-    borderColor: 'rgba(255, 255, 255, 0.55)',
-    backgroundColor: Platform.OS === 'android' ? 'rgba(255, 255, 255, 0.35)' : undefined,
-  },
-  glassWeb: {
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.55)',
-    backgroundColor: 'rgba(255, 255, 255, 0.42)',
-  },
-  glassInner: {
+    backgroundColor: '#fff',
     paddingVertical: 12,
     paddingHorizontal: 14,
   },
-  glassPressed: {
-    opacity: 0.92,
+  cardPressed: {
+    opacity: 0.85,
   },
   row: { flexDirection: 'row', alignItems: 'center' },
   dp: {

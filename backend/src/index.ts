@@ -1,5 +1,12 @@
 import 'dotenv/config';
 import { createServer } from 'http';
+
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled promise rejection (recovered):', reason);
+});
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception (recovered):', err.message);
+});
 import { Server } from 'socket.io';
 import { createApp } from './app';
 import { corsOrigin } from './corsConfig';

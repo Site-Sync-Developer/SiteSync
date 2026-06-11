@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import type { Response, NextFunction } from 'express';
 import type { UserRole, ConversationType } from '@prisma/client';
 import { prisma } from '../db';
 import type { AuthedRequest } from '../middleware/auth';
@@ -6,6 +7,10 @@ import { authMiddleware } from '../middleware/auth';
 import * as S from '../lib/serialize';
 import { canViewProject } from '../lib/projectAccess';
 import type { Server as IoServer } from 'socket.io';
+
+type AsyncHandler = (req: AuthedRequest, res: Response, next: NextFunction) => Promise<unknown>;
+const wrap = (fn: AsyncHandler) => (req: AuthedRequest, res: Response, next: NextFunction) =>
+  fn(req, res, next).catch(next);
 
 const router = Router();
 router.use(authMiddleware);
@@ -39,7 +44,7 @@ function superadminChatAllowed(requesterRole: UserRole, otherRoles: UserRole[]):
 }
 
 /** Messages from others where the current user is not in read_by (tab badge). */
-router.get('/unread-count', async (req: AuthedRequest, res) => {
+router.get('/unread-count', wrap(async (req: AuthedRequest, res) => {
   const uid = req.userId!;
   const role = req.userRole as UserRole;
   const candidateConversations = await prisma.conversation.findMany({
@@ -72,9 +77,9 @@ router.get('/unread-count', async (req: AuthedRequest, res) => {
     },
   });
   res.json({ count });
-});
+}));
 
-router.get('/conversations', async (req: AuthedRequest, res) => {
+router.get('/conversations', wrap(async (req: AuthedRequest, res) => {
   const uid = req.userId!;
   const role = req.userRole as UserRole;
   const list = await prisma.conversation.findMany({
@@ -125,9 +130,9 @@ router.get('/conversations', async (req: AuthedRequest, res) => {
       return { ...base, unread_count: unreadByConv.get(c.id) ?? 0 };
     })
   );
-});
+}));
 
-router.get('/search', async (req: AuthedRequest, res) => {
+router.get('/search', wrap(async (req: AuthedRequest, res) => {
   const uid = req.userId!;
   const role = req.userRole as UserRole;
   const query = String(req.query.query ?? '').trim();
@@ -189,9 +194,9 @@ router.get('/search', async (req: AuthedRequest, res) => {
 
   const conversation_ids = Array.from(new Set([...matchedByPeople, ...matchedByMessages]));
   res.json({ conversation_ids });
-});
+}));
 
-router.post('/conversations', async (req: AuthedRequest, res) => {
+router.post('/conversations', wrap(async (req: AuthedRequest, res) => {
   const body = req.body ?? {};
   const participants: string[] = body.participants ?? [];
   const projectId = body.project_id ?? body.projectId;
@@ -288,9 +293,9 @@ router.post('/conversations', async (req: AuthedRequest, res) => {
   });
 
   res.status(201).json(S.conversation({ ...conv, participants: conv.participants, messages: [] }));
-});
+}));
 
-router.put('/conversations/:id/archive', async (req: AuthedRequest, res) => {
+router.put('/conversations/:id/archive', wrap(async (req: AuthedRequest, res) => {
   const uid = req.userId!;
   const archive = Boolean(req.body?.archive ?? true);
   const conv = await prisma.conversation.findFirst({
@@ -310,9 +315,9 @@ router.put('/conversations/:id/archive', async (req: AuthedRequest, res) => {
     include: { participants: true, messages: { orderBy: { createdAt: 'desc' }, take: 1 } },
   });
   res.json(S.conversation(updated));
-});
+}));
 
-router.delete('/conversations/:id', async (req: AuthedRequest, res) => {
+router.delete('/conversations/:id', wrap(async (req: AuthedRequest, res) => {
   const uid = req.userId!;
   const conv = await prisma.conversation.findFirst({
     where: {
@@ -324,7 +329,7 @@ router.delete('/conversations/:id', async (req: AuthedRequest, res) => {
   if (!conv) return res.status(404).json({ error: 'Conversation not found' });
   await prisma.conversation.delete({ where: { id: conv.id } });
   res.status(204).send();
-});
+}));
 
 async function ensureToolboxConversation(companyId: string) {
   const existing = await prisma.conversation.findFirst({
@@ -347,7 +352,7 @@ async function ensureToolboxConversation(companyId: string) {
   });
 }
 
-router.get('/toolbox', async (req: AuthedRequest, res) => {
+router.get('/toolbox', wrap(async (req: AuthedRequest, res) => {
   const uid = req.userId!;
   const conv = await ensureToolboxConversation(req.companyId!);
   const archived = (conv.archivedBy ?? []).includes(uid);
@@ -361,9 +366,9 @@ router.get('/toolbox', async (req: AuthedRequest, res) => {
     archived,
     messages: messages.map(S.message),
   });
-});
+}));
 
-router.post('/toolbox/messages', async (req: AuthedRequest, res) => {
+router.post('/toolbox/messages', wrap(async (req: AuthedRequest, res) => {
   const body = req.body ?? {};
   const contentRaw = body.content != null ? String(body.content) : '';
   const attachmentUrl = body.attachment_url ?? body.attachmentUrl ?? undefined;
@@ -387,9 +392,9 @@ router.post('/toolbox/messages', async (req: AuthedRequest, res) => {
     },
   });
   res.status(201).json(S.message(msg));
-});
+}));
 
-router.put('/toolbox/archive', async (req: AuthedRequest, res) => {
+router.put('/toolbox/archive', wrap(async (req: AuthedRequest, res) => {
   const uid = req.userId!;
   const archive = Boolean(req.body?.archive ?? true);
   const conv = await ensureToolboxConversation(req.companyId!);
@@ -398,9 +403,9 @@ router.put('/toolbox/archive', async (req: AuthedRequest, res) => {
     : (conv.archivedBy ?? []).filter((id) => id !== uid);
   await prisma.conversation.update({ where: { id: conv.id }, data: { archivedBy } });
   res.status(204).send();
-});
+}));
 
-router.get('/conversations/:id/messages', async (req: AuthedRequest, res) => {
+router.get('/conversations/:id/messages', wrap(async (req: AuthedRequest, res) => {
   const conv = await prisma.conversation.findFirst({
     where: {
       id: req.params.id,
@@ -416,9 +421,9 @@ router.get('/conversations/:id/messages', async (req: AuthedRequest, res) => {
     take: 500,
   });
   res.json(messages.map(S.message));
-});
+}));
 
-router.post('/messages', async (req: AuthedRequest, res) => {
+router.post('/messages', wrap(async (req: AuthedRequest, res) => {
   const body = req.body ?? {};
   const conversationId = body.conversation_id ?? body.conversationId;
   const contentRaw = body.content != null ? String(body.content) : '';
@@ -473,9 +478,9 @@ router.post('/messages', async (req: AuthedRequest, res) => {
   }
 
   res.status(201).json(serialized);
-});
+}));
 
-router.put('/messages/:id', async (req: AuthedRequest, res) => {
+router.put('/messages/:id', wrap(async (req: AuthedRequest, res) => {
   const contentRaw = req.body?.content != null ? String(req.body.content) : '';
   const content = contentRaw.trim();
   if (!content) return res.status(400).json({ error: 'content required' });
@@ -505,9 +510,9 @@ router.put('/messages/:id', async (req: AuthedRequest, res) => {
     data: { updatedAt: new Date() },
   });
   res.json(S.message(updated));
-});
+}));
 
-router.delete('/messages/:id', async (req: AuthedRequest, res) => {
+router.delete('/messages/:id', wrap(async (req: AuthedRequest, res) => {
   const existing = await prisma.message.findUnique({
     where: { id: req.params.id },
     include: {
@@ -530,9 +535,9 @@ router.delete('/messages/:id', async (req: AuthedRequest, res) => {
     data: { updatedAt: new Date() },
   });
   res.status(204).send();
-});
+}));
 
-router.put('/messages/:id/read', async (req: AuthedRequest, res) => {
+router.put('/messages/:id/read', wrap(async (req: AuthedRequest, res) => {
   const m = await prisma.message.findUnique({
     where: { id: req.params.id },
     include: {
@@ -554,6 +559,6 @@ router.put('/messages/:id/read', async (req: AuthedRequest, res) => {
     data: { readBy },
   });
   res.status(204).send();
-});
+}));
 
 export default router;
