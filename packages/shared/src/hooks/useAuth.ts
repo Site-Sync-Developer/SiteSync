@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { authService } from '../api/authService';
 import type { RegisterInvitationPayload } from '../api/authService';
 import { getStoredToken, getStoredUser } from '../utils/storage';
+import { registerUnauthorizedHandler } from '../api/axiosInstance';
 import type { User } from '../models';
 
 export function useAuth() {
@@ -43,6 +44,13 @@ export function useAuth() {
   useEffect(() => {
     loadStoredUser();
   }, [loadStoredUser]);
+
+  useEffect(() => {
+    registerUnauthorizedHandler(() => {
+      setUser(null);
+      setIsAuthenticated(false);
+    });
+  }, []);
 
   const login = useCallback(async (email: string, password: string) => {
     const res = await authService.login({ email, password });

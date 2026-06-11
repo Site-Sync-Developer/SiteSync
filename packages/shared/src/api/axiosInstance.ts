@@ -10,6 +10,12 @@ const axiosInstance = axios.create({
 });
 
 let handlingUnauthorized = false;
+let onUnauthorizedCallback: (() => void) | null = null;
+
+/** Register a callback to be called when a 401 is received (e.g. to log out). */
+export function registerUnauthorizedHandler(fn: () => void) {
+  onUnauthorizedCallback = fn;
+}
 
 function isNgrokFreeHost(url: string): boolean {
   return /ngrok-free\.app|ngrok-free\.dev|ngrok\.io|ngrok\.app/i.test(url);
@@ -49,6 +55,10 @@ axiosInstance.interceptors.response.use(
             // no-op
           }
         }
+        // Mobile: notify the auth context to log out.
+        onUnauthorizedCallback?.();
+        // Reset flag after a short delay so future sessions work correctly.
+        setTimeout(() => { handlingUnauthorized = false; }, 2000);
       }
     }
     return Promise.reject(error);

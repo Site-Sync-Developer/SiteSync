@@ -96,24 +96,32 @@ function UserEditModal({
     is_active: user.is_active,
   });
 
-  const pickPhoto = async () => {
-    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!perm.granted) {
-      Alert.alert('Permission', 'Photo library access is required.');
-      return;
-    }
-    const res = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 0.85,
-    });
-    if (!res.canceled && res.assets[0]?.uri) {
-      const url = await uploadsService.uploadProfilePhoto({
-        uri: res.assets[0].uri,
-        name: 'profile.jpg',
-        type: 'image/jpeg',
-      });
+  const pickPhoto = () => {
+    const doUpload = async (uri: string) => {
+      const url = await uploadsService.uploadProfilePhoto({ uri, name: 'profile.jpg', type: 'image/jpeg' });
       setDraft((prev) => ({ ...prev, photo_url: url }));
-    }
+    };
+    Alert.alert('Update photo', 'Choose a source', [
+      {
+        text: 'Camera',
+        onPress: async () => {
+          const perm = await ImagePicker.requestCameraPermissionsAsync();
+          if (!perm.granted) { Alert.alert('Permission', 'Camera access is required.'); return; }
+          const res = await ImagePicker.launchCameraAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, quality: 0.85 });
+          if (!res.canceled && res.assets[0]?.uri) await doUpload(res.assets[0].uri);
+        },
+      },
+      {
+        text: 'Photo Library',
+        onPress: async () => {
+          const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+          if (!perm.granted) { Alert.alert('Permission', 'Photo library access is required.'); return; }
+          const res = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, quality: 0.85 });
+          if (!res.canceled && res.assets[0]?.uri) await doUpload(res.assets[0].uri);
+        },
+      },
+      { text: 'Cancel', style: 'cancel' },
+    ]);
   };
 
   return (
@@ -196,7 +204,11 @@ export function UsersScreen() {
   const [adminsOnly, setAdminsOnly] = useState(false);
 
   const { data: users = [], isLoading, refetch, isRefetching } = useQuery({
-    queryKey: ['users', user?.role, activeCompanyId, adminsOnly],
+    queryKey: adminsOnly
+      ? ['users', 'admins', activeCompanyId]
+      : user?.role === 'superadmin' && activeCompanyId
+        ? ['users', activeCompanyId]
+        : ['users'],
     queryFn: () =>
       adminsOnly
         ? usersService.getAdmins(user?.role === 'superadmin' ? activeCompanyId ?? undefined : undefined)
