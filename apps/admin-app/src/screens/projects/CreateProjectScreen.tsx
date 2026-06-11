@@ -321,7 +321,7 @@ export function CreateProjectScreen() {
     const addFromCamera = async () => {
       const perm = await ImagePicker.requestCameraPermissionsAsync();
       if (!perm.granted) { Alert.alert('Permission', 'Camera access is required.'); return; }
-      const res = await ImagePicker.launchCameraAsync({ mediaTypes: ImagePicker.MediaType.Images, quality: 0.85 });
+      const res = await ImagePicker.launchCameraAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, quality: 0.85 });
       if (!res.canceled && res.assets[0]?.uri) {
         setPhotoUris((prev) => Array.from(new Set([...prev, res.assets[0].uri])));
       }
@@ -329,7 +329,7 @@ export function CreateProjectScreen() {
     const addFromLibrary = async () => {
       const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!perm.granted) { Alert.alert('Permission', 'Photo library access is required.'); return; }
-      const res = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaType.Images, allowsMultipleSelection: true, selectionLimit: 12, quality: 0.85 });
+      const res = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, allowsMultipleSelection: true, selectionLimit: 12, quality: 0.85 });
       if (!res.canceled && res.assets.length > 0) {
         const incoming = res.assets.map((a) => a.uri).filter(Boolean);
         setPhotoUris((prev) => Array.from(new Set([...prev, ...incoming])));

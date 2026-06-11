@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { config } from '../config/apiConfig';
-import { clearAuth, getStoredToken, getStoredActiveCompanyId } from '../utils/storage';
+import { getStoredToken, getStoredActiveCompanyId } from '../utils/storage';
 
 const axiosInstance = axios.create({
   baseURL: config.apiBaseUrl,
@@ -8,14 +8,6 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-let handlingUnauthorized = false;
-let onUnauthorizedCallback: (() => void) | null = null;
-
-/** Register a callback to be called when a 401 is received (e.g. to log out). */
-export function registerUnauthorizedHandler(fn: () => void) {
-  onUnauthorizedCallback = fn;
-}
 
 function isNgrokFreeHost(url: string): boolean {
   return /ngrok-free\.app|ngrok-free\.dev|ngrok\.io|ngrok\.app/i.test(url);
@@ -39,27 +31,22 @@ axiosInstance.interceptors.request.use(async (reqConfig) => {
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
+  (error: AxiosError) => {
     if (error.response?.status === 401) {
-      if (!handlingUnauthorized) {
-        handlingUnauthorized = true;
-        await clearAuth();
-        // Web: force a clean app state so navigation returns to auth.
-        const webGlobal = globalThis as typeof globalThis & {
-          location?: { reload?: () => void };
-        };
-        if (typeof webGlobal.location?.reload === 'function') {
-          try {
-            webGlobal.location.reload();
-          } catch {
-            // no-op
-          }
+      // Web: reload to return to the auth screen.
+      const webGlobal = globalThis as typeof globalThis & {
+        location?: { reload?: () => void };
+      };
+      if (typeof webGlobal.location?.reload === 'function') {
+        try {
+          webGlobal.location.reload();
+        } catch {
+          // no-op
         }
-        // Mobile: notify the auth context to log out.
-        onUnauthorizedCallback?.();
-        // Reset flag after a short delay so future sessions work correctly.
-        setTimeout(() => { handlingUnauthorized = false; }, 2000);
       }
+      // Mobile: let the individual request fail naturally.
+      // Do NOT clear auth storage — the token stays valid; one 401 on a
+      // background request should not end the user's session.
     }
     return Promise.reject(error);
   }
