@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
@@ -19,10 +19,11 @@ export function NotificationBell() {
   const unread = items.filter((n) => !n.read).length;
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() => openNotifications(navigation)}
       style={styles.hit}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      activeOpacity={0.7}
       accessibilityLabel="Notifications"
       accessibilityHint="Opens notification list"
     >
@@ -34,7 +35,7 @@ export function NotificationBell() {
           </View>
         ) : null}
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

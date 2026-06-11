@@ -317,22 +317,29 @@ export function CreateProjectScreen() {
     onError: (e: Error) => Alert.alert('Error', e.message || 'Could not save project'),
   });
 
-  const addPhoto = async () => {
-    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!perm.granted) {
-      Alert.alert('Permission', 'Photo library access is required.');
-      return;
-    }
-    const res = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaType.Images,
-      allowsMultipleSelection: true,
-      selectionLimit: 12,
-      quality: 0.85,
-    });
-    if (!res.canceled && res.assets.length > 0) {
-      const incoming = res.assets.map((a) => a.uri).filter(Boolean);
-      setPhotoUris((prev) => Array.from(new Set([...prev, ...incoming])));
-    }
+  const addPhoto = () => {
+    const addFromCamera = async () => {
+      const perm = await ImagePicker.requestCameraPermissionsAsync();
+      if (!perm.granted) { Alert.alert('Permission', 'Camera access is required.'); return; }
+      const res = await ImagePicker.launchCameraAsync({ mediaTypes: ImagePicker.MediaType.Images, quality: 0.85 });
+      if (!res.canceled && res.assets[0]?.uri) {
+        setPhotoUris((prev) => Array.from(new Set([...prev, res.assets[0].uri])));
+      }
+    };
+    const addFromLibrary = async () => {
+      const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!perm.granted) { Alert.alert('Permission', 'Photo library access is required.'); return; }
+      const res = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaType.Images, allowsMultipleSelection: true, selectionLimit: 12, quality: 0.85 });
+      if (!res.canceled && res.assets.length > 0) {
+        const incoming = res.assets.map((a) => a.uri).filter(Boolean);
+        setPhotoUris((prev) => Array.from(new Set([...prev, ...incoming])));
+      }
+    };
+    Alert.alert('Add photo', 'Choose a source', [
+      { text: 'Camera', onPress: () => void addFromCamera() },
+      { text: 'Photo Library', onPress: () => void addFromLibrary() },
+      { text: 'Cancel', style: 'cancel' },
+    ]);
   };
 
   const removePhoto = (index: number) => {
@@ -382,23 +389,13 @@ export function CreateProjectScreen() {
       </TouchableOpacity>
 
       <Text style={styles.label}>Address *</Text>
-      {isMapboxConfigured() ? (
-        <Text style={styles.hint}>
-          Start typing for UK address suggestions (Google Maps); picking one fills coordinates below.
-        </Text>
-      ) : (
-        <Text style={styles.hint}>
-          Add EXPO_PUBLIC_GOOGLE_MAPS_API_KEY to apps/admin-app/.env for autocomplete (restart Expo
-          after).
-        </Text>
-      )}
       <View style={styles.addressWrap}>
         <View style={styles.addressInputRow}>
           <TextInput
             style={[styles.input, styles.addressInput]}
             value={address}
             onChangeText={onAddressTextChange}
-            placeholder="Full street address (not lat,lng only)"
+            placeholder="Full street address"
             placeholderTextColor="#897c98"
             autoCorrect={false}
           />
