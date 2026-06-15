@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import 'react-native-gesture-handler';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
@@ -42,27 +42,27 @@ function AppContent() {
 }
 
 export default function App() {
-  // Hide the splash as soon as the root view has rendered on screen.
-  // Using onLayout rather than a useEffect tied to auth state, so it fires
-  // even if AsyncStorage hangs and loading never resolves.
+  useEffect(() => {
+    SplashScreen.hideAsync().catch(() => undefined);
+  }, []);
+
   const onRootLayout = useCallback(() => {
     SplashScreen.hideAsync().catch(() => undefined);
   }, []);
 
   return (
-    <ErrorBoundary>
-      <GestureHandlerRootView
-        style={{ flex: 1, backgroundColor: '#4a026f' }}
-        onLayout={onRootLayout}
-      >
-        <SafeAreaProvider>
-          <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-              <AppContent />
-            </AuthProvider>
-          </QueryClientProvider>
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
-    </ErrorBoundary>
+    <View style={StyleSheet.absoluteFill} onLayout={onRootLayout}>
+      <ErrorBoundary>
+        <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#4a026f' }}>
+          <SafeAreaProvider>
+            <QueryClientProvider client={queryClient}>
+              <AuthProvider>
+                <AppContent />
+              </AuthProvider>
+            </QueryClientProvider>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </ErrorBoundary>
+    </View>
   );
 }
