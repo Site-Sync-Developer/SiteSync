@@ -30,7 +30,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#4a026f"
       },
-      "package": "com.sitesync.staff"
+      "package": "com.sitesync.staff",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",

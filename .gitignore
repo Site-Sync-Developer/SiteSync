@@ -40,5 +40,9 @@ Thumbs.db
 .claude/
 skills-lock.json
 
+# Firebase service account keys (secrets, never commit)
+*firebase-adminsdk*.json
+*-firebase-adminsdk-*.json
+
 # Migration helper scripts (not needed in repo)
 backend/prisma/migrations/combined_neon_setup.sql
