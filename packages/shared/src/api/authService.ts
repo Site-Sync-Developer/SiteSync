@@ -20,38 +20,65 @@ export interface RegisterInvitationPayload {
   role_mapping?: 'strict' | 'invite_link';
 }
 
+const extractErrorMessage = (error: unknown): string => {
+  const axiosError = error as any;
+  if (axiosError?.response?.data?.error) {
+    return axiosError.response.data.error;
+  }
+  if (axiosError?.message) {
+    return axiosError.message;
+  }
+  return 'An error occurred';
+};
+
 export const authService = {
   async login(credentials: LoginRequest): Promise<LoginResponse> {
-    const { data } = await axiosInstance.post<LoginResponse>('/auth/login', credentials);
-    await setStoredToken(data.token);
-    await setStoredUser(JSON.stringify(data.user));
-    // Force fresh project selection after each login (used by supervisor dashboard scoping).
-    await setStoredActiveProjectId(null);
-    await setRequiresSupervisorProjectPick(data.user.role === 'supervisor');
-    return data;
+    try {
+      const { data } = await axiosInstance.post<LoginResponse>('/auth/login', credentials);
+      await setStoredToken(data.token);
+      await setStoredUser(JSON.stringify(data.user));
+      // Force fresh project selection after each login (used by supervisor dashboard scoping).
+      await setStoredActiveProjectId(null);
+      await setRequiresSupervisorProjectPick(data.user.role === 'supervisor');
+      return data;
+    } catch (error) {
+      throw new Error(extractErrorMessage(error));
+    }
   },
 
   async register(payload: Partial<User> & { password: string }): Promise<LoginResponse> {
-    const { data } = await axiosInstance.post<LoginResponse>('/auth/register', payload);
-    await setStoredToken(data.token);
-    await setStoredUser(JSON.stringify(data.user));
-    return data;
+    try {
+      const { data } = await axiosInstance.post<LoginResponse>('/auth/register', payload);
+      await setStoredToken(data.token);
+      await setStoredUser(JSON.stringify(data.user));
+      return data;
+    } catch (error) {
+      throw new Error(extractErrorMessage(error));
+    }
   },
 
   async registerInvitation(payload: RegisterInvitationPayload): Promise<LoginResponse> {
-    const { data } = await axiosInstance.post<LoginResponse>('/auth/register-invitation', payload);
-    await setStoredToken(data.token);
-    await setStoredUser(JSON.stringify(data.user));
-    return data;
+    try {
+      const { data } = await axiosInstance.post<LoginResponse>('/auth/register-invitation', payload);
+      await setStoredToken(data.token);
+      await setStoredUser(JSON.stringify(data.user));
+      return data;
+    } catch (error) {
+      throw new Error(extractErrorMessage(error));
+    }
   },
 
   async changePassword(currentPassword: string, newPassword: string): Promise<User> {
-    const { data } = await axiosInstance.post<{ user: User }>('/auth/change-password', {
-      current_password: currentPassword,
-      new_password: newPassword,
-    });
-    await setStoredUser(JSON.stringify(data.user));
-    return data.user;
+    try {
+      const { data } = await axiosInstance.post<{ user: User }>('/auth/change-password', {
+        current_password: currentPassword,
+        new_password: newPassword,
+      });
+      await setStoredUser(JSON.stringify(data.user));
+      return data.user;
+    } catch (error) {
+      throw new Error(extractErrorMessage(error));
+    }
   },
 
   async logout(): Promise<void> {
@@ -60,10 +87,18 @@ export const authService = {
   },
 
   async requestPasswordReset(email: string): Promise<void> {
-    await axiosInstance.post('/password-reset/request', { email });
+    try {
+      await axiosInstance.post('/password-reset/request', { email });
+    } catch (error) {
+      throw new Error(extractErrorMessage(error));
+    }
   },
 
   async resetPassword(token: string, password: string): Promise<void> {
-    await axiosInstance.post('/password-reset/reset', { token, password });
+    try {
+      await axiosInstance.post('/password-reset/reset', { token, password });
+    } catch (error) {
+      throw new Error(extractErrorMessage(error));
+    }
   },
 };

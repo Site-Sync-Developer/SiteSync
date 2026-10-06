@@ -91,14 +91,16 @@ export function StaffRegisterScreen() {
     }
     setSubmitting(true);
     try {
-      const res = await registerInvitation({
+      const payload = {
         token,
         first_name: firstName.trim(),
         last_name: lastName.trim(),
         password: password.trim(),
         email: email.trim().toLowerCase(),
-        role_mapping: 'strict',
-      });
+        role_mapping: 'strict' as const,
+      };
+      console.log('Submitting registration with payload:', payload);
+      const res = await registerInvitation(payload);
       const url = await uploadsService.uploadProfilePhoto({
         uri: photoUri,
         name: 'profile.jpg',
@@ -108,8 +110,9 @@ export function StaffRegisterScreen() {
       await refreshUser();
       Alert.alert('Welcome', 'Your account is ready.');
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : 'Registration failed';
-      Alert.alert('Error', String(msg));
+      const errorMsg = e instanceof Error ? e.message : String(e);
+      console.error('Registration error:', errorMsg, e);
+      Alert.alert('Error', errorMsg);
     } finally {
       setSubmitting(false);
     }
