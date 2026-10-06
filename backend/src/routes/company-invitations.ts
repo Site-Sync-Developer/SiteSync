@@ -45,7 +45,6 @@ router.post('/request-code', async (req, res) => {
     const invitation = await prisma.companyInvitation.findFirst({
       where: {
         email,
-        role: 'admin',
         usedAt: null,
         expiresAt: { gt: new Date() },
       },
