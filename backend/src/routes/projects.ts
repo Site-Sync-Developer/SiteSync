@@ -86,7 +86,13 @@ router.get('/', async (req: AuthedRequest, res) => {
     const qUserId = req.query.userId as string | undefined;
     if (qUserId) {
       const u = await prisma.user.findUnique({ where: { id: qUserId } });
-      where = u ? { companyId: u.companyId, deletedAt: null } : { id: { in: [] } };
+      if (!u) {
+        where = { id: { in: [] } };
+      } else if (u.companyId) {
+        where = { companyId: u.companyId, deletedAt: null };
+      } else {
+        where = { deletedAt: null };
+      }
     } else {
       where = { deletedAt: null };
     }

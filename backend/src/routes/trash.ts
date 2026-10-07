@@ -19,23 +19,25 @@ function requireAdmin(req: AuthedRequest, res: any): boolean {
 router.get('/', async (req: AuthedRequest, res) => {
   if (!requireAdmin(req, res)) return;
 
-  const companyId = req.companyId!;
+  const projectWhere: any = {
+    deletedAt: { not: null },
+    ...(req.companyId ? { companyId: req.companyId } : {}),
+    ...(req.userRole !== 'superadmin' && { createdByUserId: req.userId! }),
+  };
+
+  const userWhere: any = {
+    deletedAt: { not: null },
+    ...(req.companyId ? { companyId: req.companyId } : {}),
+  };
 
   const [projects, users] = await Promise.all([
     prisma.project.findMany({
-      where: {
-        companyId,
-        deletedAt: { not: null },
-        ...(req.userRole !== 'superadmin' && { createdByUserId: req.userId! }),
-      },
+      where: projectWhere,
       orderBy: { deletedAt: 'desc' },
       select: { id: true, name: true, address: true, deletedAt: true, category: true },
     }),
     prisma.user.findMany({
-      where: {
-        companyId,
-        deletedAt: { not: null },
-      },
+      where: userWhere,
       orderBy: { deletedAt: 'desc' },
       select: { id: true, firstName: true, lastName: true, email: true, role: true, deletedAt: true },
     }),

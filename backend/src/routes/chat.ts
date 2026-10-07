@@ -14,6 +14,12 @@ const wrap = (fn: AsyncHandler) => (req: AuthedRequest, res: Response, next: Nex
 
 const router = Router();
 router.use(authMiddleware);
+router.use((req: AuthedRequest, res, next) => {
+  if (!req.companyId) {
+    return res.status(403).json({ error: 'Company context required. Superadmins must pass X-Company-Id header.' });
+  }
+  next();
+});
 router.use(async (req: AuthedRequest, _res, next) => {
   // Keep presence ("last seen") fresh while user is active in chat.
   if (req.userId) {
@@ -228,11 +234,14 @@ router.post('/conversations', wrap(async (req: AuthedRequest, res) => {
     return res.status(400).json({ error: 'Participants must belong to the same company' });
   }
   const participantCompanyId = users[0].companyId;
+  if (!participantCompanyId) {
+    return res.status(400).json({ error: 'Superadmin participants must belong to a company' });
+  }
   if (req.userRole !== 'superadmin' && participantCompanyId !== req.companyId) {
     return res.status(400).json({ error: 'Participants must belong to your company' });
   }
 
-  let companyId = req.userRole === 'superadmin' ? participantCompanyId : req.companyId!;
+  const companyId = req.userRole === 'superadmin' ? participantCompanyId : req.companyId!;
   if (projectId) {
     const p = await prisma.project.findUnique({ where: { id: projectId } });
     if (!p || p.companyId !== companyId) {
@@ -273,9 +282,9 @@ router.post('/conversations', wrap(async (req: AuthedRequest, res) => {
           data: { archivedBy },
           include: { participants: true, messages: { orderBy: { createdAt: 'desc' }, take: 1 } },
         });
-        return res.json(S.conversation(updated));
+        return res.json(S.conversation({ ...updated, participants: updated.participants, messages: updated.messages }));
       }
-      return res.json(S.conversation(match));
+      return res.json(S.conversation({ ...match, participants: match.participants, messages: [] }));
     }
   }
 

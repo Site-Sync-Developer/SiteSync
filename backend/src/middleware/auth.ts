@@ -58,6 +58,10 @@ export async function authMiddleware(req: AuthedRequest, res: Response, next: Ne
       return;
     }
 
+    if (!user.companyId) {
+      return res.status(403).json({ error: 'User must have a company assigned' });
+    }
+
     const headerCo = (req.headers['x-company-id'] as string | undefined)?.trim();
     const requested = headerCo || user.companyId;
 

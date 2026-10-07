@@ -35,6 +35,7 @@ router.get('/incidents-overview', async (_req, res) => {
     where: {
       status: { not: 'resolved' },
       severity: { in: ['high', 'critical'] },
+      user: { companyId: { not: null } },
     },
     include: { user: { include: { company: true } } },
     orderBy: { createdAt: 'desc' },
@@ -47,7 +48,7 @@ router.get('/incidents-overview', async (_req, res) => {
       severity: i.severity,
       status: i.status,
       company_id: i.user.companyId,
-      company_name: i.user.company.name,
+      company_name: i.user.company!.name,
       created_at: i.createdAt.toISOString(),
     })),
   });
@@ -59,13 +60,14 @@ router.get('/compliance-overview', async (_req, res) => {
   });
   const totals = new Map<string, { company_id: string; company_name: string; pending: number; completed: number }>();
   for (const record of records) {
-    const key = record.user.companyId;
+    const companyId = record.user.companyId;
+    if (!companyId) continue;
     const bucket =
-      totals.get(key) ??
-      { company_id: key, company_name: record.user.company.name, pending: 0, completed: 0 };
+      totals.get(companyId) ??
+      { company_id: companyId, company_name: record.user.company!.name, pending: 0, completed: 0 };
     if (record.completedAt) bucket.completed += 1;
     else bucket.pending += 1;
-    totals.set(key, bucket);
+    totals.set(companyId, bucket);
   }
   res.json({ by_company: Array.from(totals.values()) });
 });

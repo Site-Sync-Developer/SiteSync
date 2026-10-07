@@ -177,7 +177,7 @@ router.put('/:id', async (req: AuthedRequest, res) => {
       }),
     },
   });
-  if (body.role != null && ['admin', 'superadmin'].includes(effectiveRole(req))) {
+  if (body.role != null && ['admin', 'superadmin'].includes(effectiveRole(req)) && existing.companyId) {
     await prisma.companyMembership.update({
       where: {
         userId_companyId: { userId: user.id, companyId: existing.companyId },
